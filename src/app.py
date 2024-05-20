@@ -7,33 +7,33 @@ import pandas as pd
 import requests
 import numpy  as np 
 
-PATH = r'C:\Users\brian\OneDrive\Escritorio\PROJECTS\UPV\sistemas_recomendacion\data'
+PATH = r'/home/das432hz/sistemas_recomendacion_movies/datos/Ficheros_y_datasets'
 genre_names = [
     'movie_id','unknown', 'Action', 'Adventure', 'Animation', 'Children\'s', 
     'Comedy', 'Crime', 'Documentary', 'Drama', 'Fantasy', 'Film-Noir', 
     'Horror', 'Musical', 'Mystery', 'Romance', 'Sci-Fi', 'Thriller', 
     'War', 'Western', 'movie_name']
-df_items = pd.read_csv(PATH+'\items.txt',sep="	", encoding='latin-1',header=None, names= genre_names)
-df_genre = pd.read_csv(PATH+'\genre.txt',sep="	", encoding='latin-1',header=None)
-df_calif = pd.read_csv(PATH+r'\u1_base.txt',sep="	", encoding='latin-1',header=None,names=["users","movie_id","rating"])
-df_users = pd.read_csv(PATH+r'\users.txt',sep="	", encoding='latin-1',header=None, names=["users","age","gender","ocuppation"])
+df_items = pd.read_csv(PATH+'/items.txt',sep="	", encoding='latin-1',header=None, names= genre_names)
+df_genre = pd.read_csv(PATH+'/genre.txt',sep="	", encoding='latin-1',header=None)
+df_calif = pd.read_csv(PATH+r'/u1_base.txt',sep="	", encoding='latin-1',header=None,names=["users","movie_id","rating"])
+df_users = pd.read_csv(PATH+r'/users.txt',sep="	", encoding='latin-1',header=None, names=["users","age","gender","ocuppation"])
 
 
 df_concat = df_users.merge(df_calif, left_on='users', right_on='users')
 df_concat= df_concat.merge(df_items, left_on='movie_id', right_on='movie_id')
 
 # Agregar una imagen en la parte superior
-st.image(r"C:\Users\brian\OneDrive\Escritorio\PROJECTS\UPV\sistemas_recomendacion\data\Netflix_logo.svg.png", use_column_width=True)
+st.image(r"/home/das432hz/sistemas_recomendacion_movies/datos/logo.png", use_column_width=True)
 nombre_usuario_valido = "abad"
 contrasena_valida = "abad"
 
 sesion_iniciada = False
 # Agregar una pantalla de inicio de sesión
-st.title("Inicio de sesión")
-boton =0 
+
 
 
 def funcion_prueba():
+    st.title("Inicio de sesión")
 
 
     # Definir los métodos de recomendación disponibles
@@ -76,15 +76,10 @@ def funcion_prueba():
         # Una vez que el usuario haya seleccionado un método y configurado los parámetros (si es necesario),
         # puedes agregar un botón para iniciar el proceso de recomendación
         if st.button("Iniciar recomendación"):
-            boton = 1 
             # Aquí puedes agregar la lógica para iniciar el proceso de recomendación con el método seleccionado
             st.write("Recomendación iniciada con el método:", metodo_seleccionado)
 
     # Dependiendo del método seleccionado, puedes mostrar parámetros adicionales o iniciar el proceso de recomendación
-    if boton==1:
-        # Mostrar parámetros específicos para el Método 1
-        st.write("Parámetros para el Método 1")
-        st.write(df_concat)
 
     left_column, right_column = st.columns(2)
     # You can use a column just like st.sidebar:
@@ -111,6 +106,7 @@ if nombre_usuario == nombre_usuario_valido and contrasena == contrasena_valida:
     # placeholder.empty()
     sesion_iniciada = True
     if sesion_iniciada:
+        st.empty()
         funcion_prueba()
         
     else:
